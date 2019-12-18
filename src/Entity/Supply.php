@@ -42,12 +42,12 @@ class Supply
      * @JMS\SerializedName("product")
      */
     private $Products = [];
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Price", inversedBy="id")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Price;
+//
+//    /**
+//     * @ORM\ManyToOne(targetEntity="App\Entity\Price", inversedBy="id")
+//     * @ORM\JoinColumn(nullable=false)
+//     */
+//    private $Price;
 
     public function getId(): ?int
     {
@@ -102,15 +102,15 @@ class Supply
         return $this;
     }
 
-    public function getPrice(): ?Price
-    {
-        return $this->Price;
-    }
-
-    public function setPrice(?Price $Price): self
-    {
-        $this->Price = $Price;
-
-        return $this;
-    }
+//    public function getPrice(): ?Price
+//    {
+//        return $this->Price;
+//    }
+//
+//    public function setPrice(?Price $Price): self
+//    {
+//        $this->Price = $Price;
+//
+//        return $this;
+//    }
 }
