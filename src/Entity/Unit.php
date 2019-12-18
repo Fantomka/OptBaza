@@ -27,9 +27,7 @@ class Unit
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUnit(): ?string
     {
         return $this->unit;

@@ -34,7 +34,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Unit")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="Id")
      */
     private $Unit;
 
@@ -89,12 +89,12 @@ class Product
         return $this;
     }
 
-    public function getUnit(): ?string
+    public function getUnit(): ?Unit
     {
         return $this->Unit;
     }
 
-    public function setUnit(string $Unit): self
+    public function setUnit(?Unit $Unit): self
     {
         $this->Unit = $Unit;
 

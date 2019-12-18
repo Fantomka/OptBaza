@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SupplyRepository")
@@ -17,28 +18,33 @@ class Supply
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Provider")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Provider", inversedBy="id")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Provider;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      */
     private $DeliveryTime;
 
     /**
      * @ORM\Column(type="array")
+     * @JMS\Groups({"suply"})
+     * @JMS\SerializedName("goods")
      */
     private $NumberOfGoods = [];
 
     /**
      * @ORM\Column(type="array")
+     * @JMS\Groups({"suply"})
+     * @JMS\SerializedName("product")
      */
     private $Products = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Price")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Price", inversedBy="id")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Price;
@@ -48,12 +54,12 @@ class Supply
         return $this->id;
     }
 
-    public function getProvider(): ?string
+    public function getProvider(): ?Provider
     {
         return $this->Provider;
     }
 
-    public function setProvider(string $Provider): self
+    public function setProvider(?Provider $Provider): self
     {
         $this->Provider = $Provider;
 
@@ -96,12 +102,12 @@ class Supply
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?Price
     {
         return $this->Price;
     }
 
-    public function setPrice(string $Price): self
+    public function setPrice(?Price $Price): self
     {
         $this->Price = $Price;
 
