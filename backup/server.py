@@ -27,9 +27,9 @@ RES 3 (PROVIDER)
 
 
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 
-app = Flask(__name__)
+APP = Flask(__name__)
 
 PRODUCTS = {
     '1': {
@@ -71,13 +71,13 @@ PROVIDERS = {
     'kod': {
         'fio': 'vasgen abdulov sharapov',
         'contact': {
-                'address': 'sq kukuevo h marakueb',
-                'phone': '8-800-555-35-35',
-                'nomer_scheta': '1234 5678 1234 5678'
+            'address': 'sq kukuevo h marakueb',
+            'phone': '8-800-555-35-35',
+            'nomer_scheta': '1234 5678 1234 5678'
         },
         'postavka': {
-                'srok': 6,
-                'count products': 1600
+            'srok': 6,
+            'count products': 1600
         }
     }
 }
@@ -85,59 +85,89 @@ PROVIDERS = {
 
 # RES 1 (HOMEPAGE)
 #     GET /                                  - домашняя страница
-@app.route('/', methods=['GET'])
+@APP.route('/', methods=['GET'])
 def homepage():
+    """
+    # RES 1 (HOMEPAGE)
+    #     GET /                                  - домашняя страница
+    """
     return """<h1>Hello darkness my old friend</h1>"""
 
 
 # RES 2 (STORE)
 #     GET /store                             - список товаров (магазин)
-@app.route('/store', methods=['GET'])
+@APP.route('/store', methods=['GET'])
 def store_get():
+    """
+    # RES 2 (STORE)
+    #     GET /store                             - список товаров (магазин)
+    """
     return jsonify({'products': PRODUCTS}), 200
 
 
 #     GET /store/<string:product_name>       - товар
-@app.route('/store/<string:product_name>', methods=['GET'])
+@APP.route('/store/<string:product_name>', methods=['GET'])
 def product(product_name):
+    """
+    #     GET /store/<string:product_name>       - товар
+    """
     return jsonify({'product_name': PRODUCTS[product_name]}), 200
 
 
 #     GET /store/sequences/price_not_changed           - товары, цены которых не менялись
-@app.route('/store/sequences/price_not_changed', methods=['GET'])
+@APP.route('/store/sequences/price_not_changed', methods=['GET'])
 def product_price_not_changed():
+    """
+    #     GET /store/sequences/price_not_changed           - товары, цены которых не менялись
+    """
     return jsonify({'products': PRODUCTS}), 200
 
 
 #     GET /store/sequences/instrument                  - цена его
-@app.route('/store/sequences/instrument', methods=['GET'])
+@APP.route('/store/sequences/instrument', methods=['GET'])
 def product_instrument():
+    """
+    #     GET /store/sequences/instrument                  - цена его
+    """
     return jsonify({'product_name': PRODUCTS}), 200
 
 
 # RES 3 (PROVIDER)
 #     GET /providers                         - поставщики
-@app.route('/providers', methods=['GET'])
+@APP.route('/providers', methods=['GET'])
 def providers():
+    """
+    # RES 3 (PROVIDER)
+    #     GET /providers                         - поставщики
+    """
     return jsonify({'providers': PROVIDERS}), 200
 
 
 #     GET /providers/<string:provider_name>  - поставщик
-@app.route('/providers/<string:provider_name>', methods=['GET'])
+@APP.route('/providers/<string:provider_name>', methods=['GET'])
 def provider(provider_name):
+    """
+    #     GET /providers/<string:provider_name>  - поставщик
+    """
     return jsonify({'provider': PROVIDERS[provider_name]}), 200
 
 
 #     GET /providers/sequences/sends_all               - поставщики, которые поставляют всё
-@app.route('/providers/sequences/sends_all', methods=['GET'])
+@APP.route('/providers/sequences/sends_all', methods=['GET'])
 def providers_sends_all():
+    """
+    #     GET /providers/sequences/sends_all               - поставщики, которые поставляют всё
+    """
     return jsonify({'provider': PROVIDERS}), 200
 
 
 #     GET /providers/sequences/mouse_kovr              - поставщик, который продает дешевле
-@app.route('/providers/sequences/mouse_kovr', methods=['GET'])
+@APP.route('/providers/sequences/mouse_kovr', methods=['GET'])
 def providers_mouse_kovr():
+    """
+    #     GET /providers/sequences/mouse_kovr              - поставщик, который продает дешевле
+    """
     return jsonify({'provider': PROVIDERS}), 200
 
 
-app.run(port=8080, debug=True)
+APP.run(port=8080, debug=True)
