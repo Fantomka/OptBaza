@@ -15,14 +15,10 @@
 Разработать программное нагрузочное тестирование ПО
 
 Класс:
-class_matrix.py - класс матрица, хранящая в себе все необходимые данные и
-весь необходимый функционал.
-
-Использованные переменные:
-matrix - объект класса Matrix;
-answer - решение пользователя, какой метод использовать.
+UserBehavior.py - класс поведения пользователя.
 """
 from locust import TaskSet, task
+from flask import jsonify
 
 
 class FlowException(Exception):
@@ -30,19 +26,43 @@ class FlowException(Exception):
 
 
 class UserBehavior(TaskSet):
-    # def on_start(self):
-    #     self.client.post("/login", {"username": "ellen_key", "password": "education"})
-    #
-    # def on_stop(self):
-    #     self.client.post("/logout", {"username": "ellen_key", "password": "education"})
+    def on_start(self):
+        self.client.post("/login", {"username": "ellen_key"})
 
-    @task(1)
-    def index(self):
-        self.client.get('/store')
+    def on_stop(self):
+        self.client.post("/logout", {"username": "ellen_key"})
+
+    @task(4)
+    def get_products(self):
+        self.client.get('/home/store')
 
     @task(2)
-    def profile(self):
+    def providers(self):
         self.client.get("/providers")
+
+    @task(2)
+    def get_all_profile(self):
+        self.client.get("/providers/all")
+
+    @task(2)
+    def check_menu(self):
+        self.client.get("/object")
+
+    @task(2)
+    def get_provider(self):
+        self.client.get("/object/provider")
+
+    @task(2)
+    def get_lower_price(self):
+        test_json = jsonify({'Федотова Домна Богдановна': 5134, 'Никифорова Тереза Богдановна': 287})
+        with self.client.get("/object/lower", catch_response=True) as response:
+            if response.status_code == 200:
+                if response.json() == test_json:
+                    response.success()
+                else:
+                    response.failure(f'Неправильные возвращаемые значения')
+            else:
+                response.failure(f'Код статуса {response.status_code}')
 
     @task(3)
     def check_flow(self):
