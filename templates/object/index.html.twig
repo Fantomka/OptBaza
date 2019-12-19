@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ObjectController!{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            margin:50px auto;
+            width:800px;
+            height:300px;
+            /*box-shadow:1px 1px 1px #333;*/
+            background-color:#3A78A1;
+            background-image:
+                    linear-gradient(#83ABC4 1px, transparent 1px),
+                    linear-gradient(90deg, #83ABC4 1px, transparent 1px),
+                    linear-gradient(#3A78A1 1px, transparent 1px),
+                    linear-gradient(90deg, #3A78A1 1px, transparent 1px),
+                    linear-gradient(#4E86AB 1px, transparent 1px),
+                    linear-gradient(90deg, #4E86AB 1px, transparent 1px);
+            background-size:
+                    100px 100px,
+                    100px 100px,
+                    5px 5px,
+                    5px 5px,
+                    20px 20px,
+                    20px 20px;
+            background-position:
+                    -1px -1px,
+                    -1px -1px,
+                    0 0,
+                    0 0,
+                    -1px -1px,
+                    -1px -1px;
+        }
+    </style>
+    <div class="buildings-wrapper d-flex flex-wrap flex align-content-between flex-basis_20 align-items-center">
+        {#        <div class="text-muted mr-2 mb-2">{{"objects.buildings"|trans}}</div>#} <a href="/object/provider">Provider</a>
+        <p><a href="/object/lower">Lower</a></p>
+        <p></p><a href="/home">Home</a>
+    </div>
+{% endblock %}
