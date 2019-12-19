@@ -1,37 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Home{% endblock %}
 {% block javascripts %}
-<script>
-    (function () {
-        getProducts();
-        function getProducts() {
-            $.get('/home/products').done(OnGetProd);
-        }
-        function OnGetProd(data) {
-            console.log(data);
-            if (data['name'] !== undefined){
-                data.forEach(prod => {
-                    let p = new Prod(prod['name'], prod['cost'], prod['unit']);
-                });
+    <script>
+        import 'jquery';
+        import 'c3/c3.css';
+        import '@fortawesome/fontawesome-free/css/all.min.css';
+        import * as d3 from 'd3/index';
+        import * as c3 from 'c3/c3.js';
+        import * as bc from './building_charts.js';
+        import 'jquery-datetimepicker/build/jquery.datetimepicker.full.js';
+        import 'jquery-datetimepicker/build/jquery.datetimepicker.min.css';
+        $(document).ready(function () {
+            function getProducts() {
+                $.get('/home/products').done(OnGetProd);
             }
-        }
-        class Prod{
-            constructor (name, cost, unit) {
-                this.name = name;
-                this.cost = cost;
-                this.unit = unit;
-                this._initProd();
+            function OnGetProd(data) {
+                console.log(data);
+                if (data['name'] !== undefined){
+                    data.forEach(prod => {
+                        let p = new Prod(prod['name'], prod['cost'], prod['unit']);
+                    });
+                }
             }
-            _initProd () {
-                this.node = $('<div class="object p-0 mr-2 mb-2 d-flex align-items-center">' + this.name +" "+" "+this.unit + this.cost + '</div>').appendTo($('.buildings-wrapper')[0]);
+            class Prod{
+                constructor (name, cost, unit) {
+                    this.name = name;
+                    this.cost = cost;
+                    this.unit = unit;
+                    this._initProd();
+                }
+                _initProd () {
+                    this.node = $('<div class="object p-0 mr-2 mb-2 d-flex align-items-center">' + this.name +" "+" "+this.unit + this.cost + '</div>').appendTo($('.buildings-wrapper')[0]);
+                }
             }
-        }
 
-    })
-</script>
+        })
+    </script>
 {%  endblock %}
 {% block body %}
+
     <style>
         body {
             margin:50px auto;
@@ -62,5 +70,8 @@
                     -1px -1px;
         }
     </style>
-
+    <div class="buildings-wrapper d-flex flex-wrap flex align-content-between flex-basis_20 align-items-center">
+    {#        <div class="text-muted mr-2 mb-2">{{"objects.buildings"|trans}}</div>#} <a href="/home/products">Take all </a>
+        <p></p><a href="/providers">ProviDers</a>
+    </div>
 {% endblock %}

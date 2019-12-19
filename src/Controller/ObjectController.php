@@ -87,4 +87,18 @@ class ObjectController extends AbstractController
         return new JsonResponse($data);
     }
 
+    /**
+     * @Route("/object/price", name="get_price",
+     *     methods={"GET"})
+     */
+    public function getProdState(PriceRepository $priceRepository){
+        $price = $priceRepository->findAll();
+        $prices = [];
+        foreach ($price as $item){
+            $prices[$item->getProduct()->getId()][] = ['price'=>$item->getPriceOfUnit(), 'timestamp' => $item->getDate()];
+//            $prices[$item->getProduct()->getId()] = $this->serializer->toArray(['price'=>$item->getPriceOfUnit(), 'timestamp' => $item->getDate()]);
+        }
+        return new JsonResponse($prices);
+    }
+
 }
