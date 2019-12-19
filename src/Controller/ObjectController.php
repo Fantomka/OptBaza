@@ -59,19 +59,32 @@ class ObjectController extends AbstractController
      * @Route("/object/lower", name="get_lover_cost",
      *     methods={"GET"})
      */
-    public function getLowerCost(PriceRepository $priceRepository, ProviderRepository $providerRepository)
+    public function getLowerCost(PriceRepository $priceRepository, ProviderRepository $providerRepository) //TODO: переписать этот роут а имено файндБай впихнуть в foreach
     {
         $target = $priceRepository->findBy(['Product' => '1']);
         $data = [];
-        $dates =[];
-        $providers = $priceRepository->findAll();
-        foreach ($target as $t){
-            foreach ($providers as $provider){
-                if ($t->getProvider()->getId() === $provider->getId()){
-                    $dates[$provider->getId()][] = $t->getPriceOfUnit();
-                }
+        $summ = [];
+        $i = 0;
+        $dates = [];
+        $providers = $providerRepository->findAll();
+        foreach ($target as $t) {
+            foreach ($providers as $provider) {
+                if (($t->getProvider()->getId() === $provider->getId()) && $i === 0) {
+                    $summ[$provider->getFullName()] = $t->getPriceOfUnit();
+                    $i++;
+                    $dates[$provider->getFullName()] = 1;
+                } elseif ($t->getProvider()->getId() === $provider->getId()) {
+                    $summ[$provider->getFullName()] = $summ[$provider->getFullName()] + $t->getPriceOfUnit();
+                    $dates[$provider->getFullName()] = $dates[$provider->getFullName()] + 1;
+                }else $i = 0;
             }
+
         }
-        return new JsonResponse($dates);
+        foreach ($summ as $key => $value) {
+            $data[$key] = $value / $dates[$key];
+        }
+
+        return new JsonResponse($data);
     }
+
 }
