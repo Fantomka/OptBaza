@@ -22,7 +22,7 @@ class ProvidersController extends AbstractController
     }
 
     /**
-     * @Route("/providers/all", name="get_products")
+     * @Route("/providers/all", name="get_providers", methods={"GET"})
      */
     public function getProducts(ProviderRepository $productRepository){
         $products = $productRepository->findAll();

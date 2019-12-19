@@ -21,10 +21,11 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/home/products", name="get_products")
+     * @Route("/home/products", name="get_products",methods={"GET"})
      */
     public function getProducts(ProductRepository $productRepository, UnitRepository $unitRepository){
         $products = $productRepository->findAll();
+        $data = [];
         foreach ($products as $product){
             $data['name'][] = $product->getProductName();
             $data['cost'][] = $product->getUnitCost();
